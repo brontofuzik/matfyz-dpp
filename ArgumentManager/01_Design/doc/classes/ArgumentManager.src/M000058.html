@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>parse_option (ArgumentManager)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File ArgumentManager.rb, line 320</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">ArgumentManager</span>.<span class="ruby-identifier">parse_option</span>( <span class="ruby-identifier">argv</span> )
+    <span class="ruby-comment cmt"># option name is guaranteed to be at the beginning of the array</span>
+    <span class="ruby-identifier">option</span> = <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">shift</span>
+    
+    <span class="ruby-comment cmt"># extract option name</span>
+    <span class="ruby-identifier">match_data</span> = <span class="ruby-constant">ArgumentManager</span>.<span class="ruby-identifier">match_option</span>( <span class="ruby-identifier">option</span> )
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">match_data</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-identifier">option</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-identifier">option_obj</span> = <span class="ruby-identifier">process_option</span>( <span class="ruby-identifier">match_data</span> )
+
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">option_obj</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;unknown option given: #{ option.to_s }&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># mark the presence of option</span>
+    <span class="ruby-identifier">option_obj</span>.<span class="ruby-identifier">set_present</span>
+    
+    <span class="ruby-comment cmt"># if option must have value, we:</span>
+    <span class="ruby-comment cmt"># 1. try to extract it from the long option</span>
+    <span class="ruby-comment cmt"># 2. take the following command line argument (if exists) for it</span>
+    <span class="ruby-comment cmt"># otherwise an exception is raised</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">option_obj</span>.<span class="ruby-identifier">must_have_value?</span>
+      <span class="ruby-identifier">match_data</span> = <span class="ruby-constant">ArgumentManager</span>.<span class="ruby-identifier">match_long_option</span>( <span class="ruby-identifier">option</span> )
+      <span class="ruby-comment cmt"># matched against long option with argument</span>
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">match_data</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>) <span class="ruby-keyword kw">and</span> (<span class="ruby-identifier">match_data</span>[ <span class="ruby-value">3</span> ] <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>)
+        <span class="ruby-identifier">argument</span> = <span class="ruby-identifier">match_data</span>[ <span class="ruby-value">3</span> ]
+        <span class="ruby-identifier">option_obj</span>.<span class="ruby-identifier">set_value</span>( <span class="ruby-identifier">argument</span> )
+      <span class="ruby-keyword kw">elsif</span> (<span class="ruby-operator">!</span> <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">empty?</span>) <span class="ruby-keyword kw">and</span> (<span class="ruby-operator">!</span> <span class="ruby-constant">ArgumentManager</span>.<span class="ruby-identifier">match_option</span>( <span class="ruby-identifier">argv</span>[ <span class="ruby-value">0</span> ] ))
+        <span class="ruby-identifier">option_obj</span>.<span class="ruby-identifier">set_value</span>( <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">shift</span> )
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;mandatory option argument not given: #{ option.to_s }&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">option_obj</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># if option must have value, we:</span>
+    <span class="ruby-comment cmt"># 1. try to extract it from the long option</span>
+    <span class="ruby-comment cmt"># 2. take the following command line argument (if exists) for it</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">option_obj</span>.<span class="ruby-identifier">can_have_value?</span>
+      <span class="ruby-identifier">match_data</span> = <span class="ruby-constant">ArgumentManager</span>.<span class="ruby-identifier">match_long_option</span>( <span class="ruby-identifier">option</span> )
+      <span class="ruby-comment cmt"># matched against long option with argument</span>
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">match_data</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>) <span class="ruby-keyword kw">and</span> (<span class="ruby-identifier">match_data</span>[ <span class="ruby-value">3</span> ] <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>)
+        <span class="ruby-identifier">argument</span> = <span class="ruby-identifier">match_data</span>[ <span class="ruby-value">3</span> ]
+        <span class="ruby-identifier">option_obj</span>.<span class="ruby-identifier">set_value</span>( <span class="ruby-identifier">argument</span> )
+      <span class="ruby-keyword kw">elsif</span> (<span class="ruby-operator">!</span> <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">empty?</span>) <span class="ruby-keyword kw">and</span> (<span class="ruby-operator">!</span> <span class="ruby-constant">ArgumentManager</span>.<span class="ruby-identifier">match_option</span>( <span class="ruby-identifier">argv</span>[ <span class="ruby-value">0</span> ] ))
+        <span class="ruby-identifier">option_obj</span>.<span class="ruby-identifier">set_value</span>( <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">shift</span> )
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">option_obj</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">option_obj</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

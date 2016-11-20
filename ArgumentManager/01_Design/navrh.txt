@@ -1,0 +1,54 @@
+=====================================
+ArgumentManager -- Zdôvodnenie návrhu
+=====================================
+
+    Prvé rozhodnutie, ktoré autori kninice ArgumentManager museli uèini, bol
+vıber implementaèného jazyka. Motivovaní predovšetkım snahou o èo najvıšší ui-
+vate¾skı komfort, pohodlnos pri práci s kninicou a v neposlednou rade i túbou
+nauèi sa nieèo nové, nechali sa zláka eleganciou jazyka Ruby. Fakt, e ani je-
+den z nich nemal pred tımto poèinom skúsenos s jazykom snáï vysvet¾uje (nie os-
+pravedlòuje) miestami ostıchavo vyuívanı potenciál niektorıch jeho silnıch ná-
+strojov.
+
+    Pravdepodobne najdôleitejším rozhodnutím, ktoré autori uèinili, je, e
+trieda ArgumentManager, ktorá si kladie za cie¾ poskytnú uivate¾ovi pohodlnú
+správu volieb a argumentov príkazového riadku, nebude nikdy inštancovaná. Toto
+rozhodnutie je motivované skutoènosou, e uívate¾ potrebuje nanajvyš jedného
+správcu argumentov. Nezanedbate¾nou vıhodou je, e uívate¾ je oslobedenı od je-
+ho explicitnej konštrukcie, zanedbate¾nou nevıhodou snáï vylúèenie monosti ex-
+trémneho prípadu parsovania príkazového riadku pod¾a viacerıch rôznych konfigu-
+rácií volieb. 
+
+    Ïalším dôleitım rozhodnutím je návrh hierarchie volieb. Tu autori usúdili
+na vhodnos pouitia mechanizmu dediènosti. Všetky triedy volieb sú priame pod-
+triedy jedného koreòa (tzv. jednokoreòová hierarchia). Koreòová trieda (obecná -
+"abstraktná" - vo¾ba) implementuje spoloèné rozhranie všetkıch svojích potomkov
+a jej jednotlivé podtriedy (boolska, celoèíselná a reazcová vo¾ba) implementujú
+svoju špecifickú funkcionalitu. Opodstatnenos tohto rozhodnutia vyplıva priamo
+z analızy poiadavok na vo¾by. Existujú spoloèné rysy (mená, povinnos, nápove-
+da, väzba na premennú) ako i charakteristiky vlastné iba urèitej triede (napr.
+medze pre celoèíselnú vo¾bu).
+
+    Za zmienku snáï stojí, e vo¾by typu interval ("range"), èi mnoina prípust-
+nıch reazcov ("enum") sú realizované celoèíselnou resp. reazcovou triedou po-
+mocou dobrovo¾nıch obmedzení zadanıch uivate¾om. Tento prístup sa autorom javí
+praktickejší ako prípadné zavedenie ïalších podtried, èím by sa zvıšili nároky
+na uivate¾ov preh¾ad.
+
+    Cie¾om, ktorı mali autori neustále na zreteli je uívate¾ská prívetivos.
+Existujú implicitné hodnoty pre všetky hodnoty, ktoré sa pouijú v prípade, e
+ich uivate¾ neuvedie explicitne. Všetky tieto hodnoty sa dajú kedyko¾vek poho-
+dlne zmeni. Toto rozhodnutie bolo podnietené faktom, e väèšina volieb je bool-
+skeho charakteru (ergo nepovinná) a tak autori poskytli úívate¾ovi ten najvyš-
+ší komfort, ktorı je pri ich registrácií monı. Staèí napísa:
+
+                  ArgumentManager.add_options( 'a', 'b', 'c' )                  
+
+a správca vytvorí 3 boolske vo¾by 'a', 'b' a 'c'.
+
+    Rozhodnutím, ktoré rozhodne stojí za pozornos je umoni správcovi argumen-
+tov uklada hodnoty volieb do uivate¾om urèenıch premennıch priamo pri parsova-
+ní príkazového riadku. Toto sa javí ako ve¾mi praktické rozhodnutie, keïe vše-
+tky obdrané vo¾by sú napokon uchovávané v príslušnıch premennıch. Správca, po
+overení korektnosti získanıch volieb, tieto do príslušnıch premennıch automati-
+cky dosadí.

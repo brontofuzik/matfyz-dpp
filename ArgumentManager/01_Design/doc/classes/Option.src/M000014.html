@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>names_ok? (Option)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File options.rb, line 452</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Option</span>.<span class="ruby-identifier">names_ok?</span>( <span class="ruby-identifier">names</span> )
+    
+    <span class="ruby-comment cmt"># detect if all names are ok</span>
+    <span class="ruby-identifier">ok_names_only</span> = <span class="ruby-identifier">names</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">|</span>
+      <span class="ruby-constant">Option</span>.<span class="ruby-identifier">name_ok?</span>( <span class="ruby-identifier">name</span> )
+    }
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ok_names_only</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">names</span>.<span class="ruby-identifier">size</span>
+      <span class="ruby-comment cmt"># at least one name was not ok</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># detect if all names are unique</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ok_names_only</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">names</span>.<span class="ruby-identifier">size</span>
+      <span class="ruby-comment cmt"># at least one duplicity</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># all names are ok and unique</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

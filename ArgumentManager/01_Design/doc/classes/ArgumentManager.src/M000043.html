@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>parse (ArgumentManager)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File options.rb, line 195</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">ArgumentManager</span>.<span class="ruby-identifier">parse</span>
+    <span class="ruby-comment cmt"># parse for non-options preceding options</span>
+    <span class="ruby-identifier">non_options</span> = <span class="ruby-constant">ArgumentManager</span>.<span class="ruby-identifier">parse_non_options</span>( <span class="ruby-constant">ARGV</span> )
+    
+    <span class="ruby-keyword kw">while</span> <span class="ruby-operator">!</span> <span class="ruby-constant">ARGV</span>.<span class="ruby-identifier">empty?</span>
+      <span class="ruby-comment cmt"># skip non-options between options</span>
+      <span class="ruby-constant">ArgumentManager</span>.<span class="ruby-identifier">parse_non_options</span>( <span class="ruby-constant">ARGV</span> )
+    
+      <span class="ruby-comment cmt"># match option</span>
+      <span class="ruby-identifier">match_data</span> = <span class="ruby-constant">ArgumentManager</span>.<span class="ruby-identifier">match_option</span>( <span class="ruby-constant">ARGV</span>[ <span class="ruby-value">0</span> ] )
+      
+      <span class="ruby-identifier">puts</span> <span class="ruby-identifier">match_data</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-value str">'here'</span>
+      
+      <span class="ruby-comment cmt"># determine option type: non-cluster vs. cluster</span>
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">match_data</span>[ <span class="ruby-value">1</span> ].<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>) <span class="ruby-keyword kw">or</span> (<span class="ruby-identifier">match_data</span>[ <span class="ruby-value">2</span> ])
+        <span class="ruby-comment cmt"># non-cluster is short option or long option with value</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-value str">'non-cluster'</span>
+        <span class="ruby-constant">ARGV</span>.<span class="ruby-identifier">shift</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-constant">ARGV</span>[ <span class="ruby-value">0</span> ]
+        <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span> <span class="ruby-constant">ARGV</span>.<span class="ruby-identifier">empty?</span>
+          <span class="ruby-constant">ArgumentManager</span>.<span class="ruby-identifier">set_option_value</span>( <span class="ruby-identifier">option_name</span>, <span class="ruby-constant">ARGV</span>[ <span class="ruby-value">0</span> ])
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-comment cmt"># cluster is a sequence of short options</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-value str">'cluster'</span>
+        <span class="ruby-identifier">match_data</span>[ <span class="ruby-value">1</span> ].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span> <span class="ruby-identifier">option_name</span> <span class="ruby-operator">|</span>
+          <span class="ruby-constant">ArgumentManager</span>.<span class="ruby-identifier">set_option_value</span>( <span class="ruby-identifier">option_name</span>, <span class="ruby-keyword kw">nil</span>)
+        }
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-constant">ARGV</span>.<span class="ruby-identifier">shift</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

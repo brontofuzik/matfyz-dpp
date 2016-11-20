@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>expand_short_option_cluster (ArgumentManager)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File ArgumentManager.rb, line 289</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">ArgumentManager</span>.<span class="ruby-identifier">expand_short_option_cluster</span>( <span class="ruby-identifier">short_option_cluster</span> )
+    
+    <span class="ruby-comment cmt"># split option string to option array of single characters</span>
+    <span class="ruby-identifier">short_option_array</span> = <span class="ruby-identifier">short_option_cluster</span>.<span class="ruby-identifier">split</span>( <span class="ruby-regexp re">//</span> )
+    
+    <span class="ruby-comment cmt"># remove leading '-'</span>
+    <span class="ruby-identifier">short_option_array</span>.<span class="ruby-identifier">shift</span>
+    
+    <span class="ruby-identifier">expanded_short_options</span> = []
+    <span class="ruby-keyword kw">while</span> <span class="ruby-operator">!</span> <span class="ruby-identifier">short_option_array</span>.<span class="ruby-identifier">empty?</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">short_option_array</span>[ <span class="ruby-value">0</span> ].<span class="ruby-identifier">match</span>( <span class="ruby-regexp re">/[A-Za-z0-9_]/</span> )
+        <span class="ruby-identifier">expanded_short_options</span>.<span class="ruby-identifier">push</span>( <span class="ruby-value str">'-'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">short_option_array</span>[ <span class="ruby-value">0</span> ] )
+        <span class="ruby-identifier">short_option_array</span>.<span class="ruby-identifier">shift</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-keyword kw">break</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">expanded_short_options</span>
+  
+    <span class="ruby-comment cmt">#while /^-[A-Za-z0-9_][A-Za-z0-9_]/.match( option )</span>
+    <span class="ruby-comment cmt">#  options.push( &quot;-&quot; + option[1, 1] )</span>
+    <span class="ruby-comment cmt">#  option = &quot;-&quot; + option[2, option.length]</span>
+    <span class="ruby-comment cmt">#end</span>
+    <span class="ruby-comment cmt">#</span>
+    <span class="ruby-comment cmt">#options.push( option )</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

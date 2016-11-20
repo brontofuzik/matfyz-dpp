@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>fetch_option_by_name (ArgumentManager)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File ArgumentManager.rb, line 392</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">ArgumentManager</span>.<span class="ruby-identifier">fetch_option_by_name</span>( <span class="ruby-identifier">option_name</span> )
+    
+    <span class="ruby-comment cmt"># search all options and all their respective names for name match</span>
+    <span class="ruby-ivar">@@options</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span> <span class="ruby-identifier">option</span> <span class="ruby-operator">|</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">option</span>.<span class="ruby-identifier">get_names</span>.<span class="ruby-identifier">include?</span>( <span class="ruby-identifier">option_name</span> )
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">option</span>
+      <span class="ruby-keyword kw">end</span>
+    }
+    
+    <span class="ruby-comment cmt"># no option with given name found</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>get_help (ArgumentManager)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File options.rb, line 253</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">ArgumentManager</span>.<span class="ruby-identifier">get_help</span>
+    <span class="ruby-identifier">help</span> = <span class="ruby-ivar">@@options</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span> <span class="ruby-identifier">option</span> <span class="ruby-operator">|</span>
+      <span class="ruby-comment cmt"># select short option names first</span>
+      <span class="ruby-identifier">short_names</span> = <span class="ruby-identifier">option</span>.<span class="ruby-identifier">get_names</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">|</span>
+        <span class="ruby-identifier">name</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+      }
+
+      <span class="ruby-comment cmt"># select long option names</span>
+      <span class="ruby-identifier">long_names</span> = <span class="ruby-identifier">option</span>.<span class="ruby-identifier">get_names</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">|</span>
+        <span class="ruby-identifier">name</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+      }
+      
+      <span class="ruby-comment cmt"># combine short names and long names to create string of names</span>
+      <span class="ruby-identifier">names</span> = <span class="ruby-identifier">short_names</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">long_names</span>
+    
+      <span class="ruby-comment cmt"># mandatory</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">option</span>.<span class="ruby-identifier">get_mandatory</span>
+        <span class="ruby-identifier">mandatory</span> = <span class="ruby-value str">'option is mandatory'</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">mandaotry</span> = <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-comment cmt"># constraints and default</span>
+      <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">option</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>
+        
+        <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'BooleanOption'</span>
+          <span class="ruby-identifier">names</span>.<span class="ruby-identifier">collect!</span> { <span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">|</span>
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+              <span class="ruby-value str">'-'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span>  
+            <span class="ruby-keyword kw">else</span>
+              <span class="ruby-value str">'--'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span>
+            <span class="ruby-keyword kw">end</span>
+          }
+          <span class="ruby-identifier">constraints</span> = <span class="ruby-keyword kw">nil</span>
+          
+        <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'IntegerOption'</span>
+          <span class="ruby-identifier">names</span>.<span class="ruby-identifier">collect!</span> { <span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">|</span>
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+              <span class="ruby-value str">'-'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span>     
+            <span class="ruby-keyword kw">else</span>
+              <span class="ruby-value str">'--'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'=INT'</span>
+            <span class="ruby-keyword kw">end</span>
+          }
+          <span class="ruby-comment cmt"># either bound is specified</span>
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">option</span>.<span class="ruby-identifier">get_min</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">option</span>.<span class="ruby-identifier">get_max</span>
+            <span class="ruby-comment cmt"># min</span>
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">option</span>.<span class="ruby-identifier">get_min</span>
+              <span class="ruby-identifier">min</span> = <span class="ruby-identifier">option</span>.<span class="ruby-identifier">get_min</span>
+            <span class="ruby-keyword kw">else</span>
+              <span class="ruby-identifier">min</span> = <span class="ruby-value str">'-inf'</span>
+            <span class="ruby-keyword kw">end</span>
+            <span class="ruby-comment cmt"># max</span>
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">option</span>.<span class="ruby-identifier">get_max</span>
+              <span class="ruby-identifier">max</span> = <span class="ruby-identifier">option</span>.<span class="ruby-identifier">get_max</span>
+            <span class="ruby-keyword kw">else</span>
+              <span class="ruby-identifier">max</span> = <span class="ruby-value str">'+inf'</span>
+            <span class="ruby-keyword kw">end</span>
+            <span class="ruby-identifier">constraints</span> = <span class="ruby-node">&quot;INT is from interval [ #{ option.get_min }, #{ option.get_max } ]&quot;</span>
+          <span class="ruby-keyword kw">end</span>
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">option</span>.<span class="ruby-identifier">get_default</span>
+            <span class="ruby-identifier">default</span> = <span class="ruby-node">&quot;INT is not mandatory -- default value is #{ option.get_default }&quot;</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">default</span> = <span class="ruby-value str">'INT is mandatory'</span>
+          <span class="ruby-keyword kw">end</span>
+          
+        <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'StringOption'</span>
+          <span class="ruby-identifier">names</span>.<span class="ruby-identifier">collect!</span> { <span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">|</span>
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+              <span class="ruby-value str">'-'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span>     
+            <span class="ruby-keyword kw">else</span>
+              <span class="ruby-value str">'--'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'=STR'</span>
+            <span class="ruby-keyword kw">end</span>
+          }
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">option</span>.<span class="ruby-identifier">get_domain</span>
+            <span class="ruby-identifier">constraints</span> = <span class="ruby-node">&quot;STR is from domain { #{ option.get_domain.join( ', ' ) } }&quot;</span>
+          <span class="ruby-keyword kw">end</span>
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">option</span>.<span class="ruby-identifier">get_default</span>
+            <span class="ruby-identifier">default</span> = <span class="ruby-node">&quot;STR is not mandatory -- default value is #{ option.get_default }&quot;</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">default</span> = <span class="ruby-value str">'STR is mandatory'</span>
+          <span class="ruby-keyword kw">end</span>
+          
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">constraints</span> = <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">end</span>
+    
+      <span class="ruby-comment cmt"># help</span>
+      <span class="ruby-identifier">help</span> = <span class="ruby-identifier">option</span>.<span class="ruby-identifier">get_help</span>
+      
+      [ <span class="ruby-identifier">names</span>.<span class="ruby-identifier">join</span>( <span class="ruby-value str">', '</span> ), <span class="ruby-identifier">mandatory</span>, <span class="ruby-identifier">constraints</span>, <span class="ruby-identifier">default</span>, <span class="ruby-identifier">help</span> ].<span class="ruby-identifier">compact</span>
+    }
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">help</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

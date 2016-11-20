@@ -1,0 +1,82 @@
+= Úvod
+
+  Písanie unit testov k vlastnej kninici nas priviedlo k zamysleniu sa nad nie-
+ktorymi jej aspektami. V tomto texte prezentujeme názor "Dr. Jekylla" na dielo
+"Mr. Hyda".
+
+= ARGV
+= alebo "Testovatelnos"
+
+  V prvom rade by sme sa radi zmienili o nutnosti upravi nieko¾ko málo miest
+zdrojového kódu kôli komfortnosti testovania. Konkrétne išlo o zmenu koncepcie
+hlavnej verejnej metódy (parse) tak, aby sama nesiahala na argumenty príkazového
+riadku (ARGV), ale aby tieto akceptovala ako svoj argument. Nevyhnutnos tejto
+zmeny spochybnila naše pôvodné rozhodnutie ponecha túto funckiu bez formálnych
+parametrov. Napriek tomu sa však domnievame, e priklonenie sa k filozofií naj-
+menšej uívate¾skej prítae v tomto prípade vieme obháji.
+
+= Vınimky
+= alebo "Nevınimky"
+
+  Pravdepodobne najväèšou nedokonalosou kódu, na ktorú sme pri testovaní nara-
+zili je absencia hierarchickej sady (vlastnıch) vınimiek. Tento aspekt kódu sa
+naplno prejavil pri testovaní, kedy by sme ocennili monos testova urèité me-
+tódy na konkrétne typy vınimiek namiesto všeobecnej RuntimeError. S odstupom èa-
+su úprimne priznávame, e mechanizmus narábania s vınimkami je akási Achillova
+päta nášho kódu, ukrıvajúca ešte ve¾kı priestor na vylepšenie. Urèite by bylo
+vhodné pouíva rôzne vınimky pri rôznych okolnostiach, prípadne vybudova hie-
+rarchiu vlastnıch vınimiek, kde by bylo moné predáva podrobné informácie
+o chybovıch stavoch.
+
+= Nekonzistentnos
+= alebo "Nahlas vs. potichu" =
+
+  Ïalším detailom, na ktorı by sme chceli upozorni je urèitá nekonzistentnos
+v návrhu správania funkcií add_option (verbózne) a set_defaults (tiché). Napriek
+tomu, e obe realizujú kontrolu korektnosti predanıch parametrov, prvá z nich sa
+v prípade nespokojnosti sauje, kım druhá chybné argumenty jednoducho ignoruje.
+Na svoju obhajobu povieme len to¾ko, e chybovos argumentov pri zavádzaní novej
+vo¾by sa nám javila o èosi závanejšia ako chybovos pokusu o zmenu implicitného
+chovania. Musíme sa prizna, e tento scenár nám s väèšej vıšky u nepripadá ta-
+kı samozrejmı a rozhodne by si zaslúil korektúru v duchu jednotnosti správania.
+
+= Prílišná "verejnos"
+= alebo "Everyone gets everything he wants."
+
+  Nedostatkom návrhu, ktorı nebol odhlaenı ani tak samotnımi unit testami ako
+naším opätovnım zamıslením sa a prehodnotením vlastného kódu je prílišná "verej-
+nos" celého rozhrania. Naša snaha poskytnú uivate¾ovi èo najviac funkcionali-
+ty tak v urèitom slovazmysle konfliktuje s naším najprioritnejším cie¾om - jed-
+noduchosou (a banálnosou) uívate¾ského rozhrania. Náš súèasnı postoj teda
+jednoznaène volá po striktnejšej politike poskytovania metód uívate¾om.
+
+= Kvalita implementácie (èistota a robustnos kódu)
+= alebo "Všetky neodhalené preklepy"
+
+  Naše unit testy nám pomohli odhali miesta našej kninice, ktorıch odolnos
+voèi neplatnım vstupom bola oslabená. Za zmienku snáï stoja privátne metódy
+z rodiny *_ok?, ktorıch robustnos je v niektorıch konkrétnych prípadov (bez za-
+biehania do detailov) narušená vynechaním testu na vhodnos typu predaného argu-
+mentu. Najšastnejším sa nám momentálne nejaví ani pouitie funkicie eval, ktorá
+do premennej naviazanej na vo¾bu ukladala vdy reazec, bez oh¾adu na skutoènı
+typ hodnoty (celoèíselnı, boolsky).
+
+= Test-driven programming
+= alebo "Aké ponauèenie si odnášame z tretej úlohy?"
+
+  Za prínos z tretej úlohy, ktorı snáï vystupuje vyššie ako všetky ostatné, po-
+vaujeme uvedomenie, e keby sme na zaèiatku zvolili vıvojovú paradigmu testami
+riadeného programovania, ušetrili by sme si nemalé mnostvo starostí a vıslednı
+kód by bol urèite kvalitnejší. Okrem toho by samozrejme tieto testy vhodné po-
+slúili na nieko¾kıch ïalších miestach ako napr. dokumentácia (príklady poui-
+tia) èi ako sada referenènıch testov pri eventuálnom pokuse o ïalší vıvoj kni-
+nice.     
+
+= Záver
+
+  Celkom nepochybne by nám oponentúra cudzieho riešenia otvorila oèi novım mo-
+nostiam a riešeniam. Rozhodne nemôeme tvrdi, e hodnotenie vlastného úsilia
+nám naprinieslo nové poh¾ady. Naopak, radi by sme skonštatovali, e prínos ply-
+núci z úlohy napísa unit testy k vlastnej kninici a jej následnej "oponentúry"
+hodnotíme ako porovnate¾nı s prínosom vyplıvajúcim zo štandardnej formy tretej
+úlohy.

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>add_option (ArgumentManager)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File ArgumentManager.rb, line 112</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">ArgumentManager</span>.<span class="ruby-identifier">add_option</span>( <span class="ruby-identifier">names</span> = [], <span class="ruby-identifier">specs</span> = {} )
+    
+    <span class="ruby-comment cmt"># convert to array if necessary</span>
+    <span class="ruby-identifier">names</span> = <span class="ruby-identifier">names</span>.<span class="ruby-identifier">to_a</span>
+    
+    <span class="ruby-comment cmt"># default option specifications are overriden when given</span>
+    <span class="ruby-identifier">specs</span> = <span class="ruby-ivar">@@df_specs</span>.<span class="ruby-identifier">merge</span>( <span class="ruby-identifier">specs</span> )
+    
+    <span class="ruby-comment cmt"># new option is created according to specifications</span>
+    <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">specs</span>[ <span class="ruby-identifier">:type</span> ]
+      <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:boolean</span>
+        <span class="ruby-identifier">new_option</span> = <span class="ruby-constant">BooleanOption</span>.<span class="ruby-identifier">new</span>( <span class="ruby-identifier">names</span>, <span class="ruby-identifier">specs</span> )
+      <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:integer</span>
+        <span class="ruby-identifier">new_option</span> = <span class="ruby-constant">IntegerOption</span>.<span class="ruby-identifier">new</span>( <span class="ruby-identifier">names</span>, <span class="ruby-identifier">specs</span> )
+      <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:string</span>
+        <span class="ruby-identifier">new_option</span> = <span class="ruby-constant">StringOption</span>.<span class="ruby-identifier">new</span>( <span class="ruby-identifier">names</span>, <span class="ruby-identifier">specs</span> )
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;invalid type specified: #{ specs[ :type ].to_s }&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># new option is stored </span>
+    <span class="ruby-ivar">@@options</span>.<span class="ruby-identifier">push</span>( <span class="ruby-identifier">new_option</span> )  
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

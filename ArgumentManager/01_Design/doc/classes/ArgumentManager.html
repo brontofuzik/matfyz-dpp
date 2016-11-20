@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: ArgumentManager</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">ArgumentManager</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/ArgumentManager_rb.html">
+                ArgumentManager.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000050">add_option</a>&nbsp;&nbsp;
+      <a href="#M000051">add_options</a>&nbsp;&nbsp;
+      <a href="#M000057">expand_short_option_cluster</a>&nbsp;&nbsp;
+      <a href="#M000056">expand_short_option_clusters</a>&nbsp;&nbsp;
+      <a href="#M000060">fetch_option_by_name</a>&nbsp;&nbsp;
+      <a href="#M000065">get_help</a>&nbsp;&nbsp;
+      <a href="#M000053">get_non_options</a>&nbsp;&nbsp;
+      <a href="#M000052">get_options</a>&nbsp;&nbsp;
+      <a href="#M000064">match_long_option</a>&nbsp;&nbsp;
+      <a href="#M000062">match_option</a>&nbsp;&nbsp;
+      <a href="#M000063">match_short_option</a>&nbsp;&nbsp;
+      <a href="#M000061">match_short_option_cluster</a>&nbsp;&nbsp;
+      <a href="#M000055">parse</a>&nbsp;&nbsp;
+      <a href="#M000058">parse_option</a>&nbsp;&nbsp;
+      <a href="#M000059">process_option</a>&nbsp;&nbsp;
+      <a href="#M000066">set_binding</a>&nbsp;&nbsp;
+      <a href="#M000054">set_defaults</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000050" class="method-detail">
+        <a name="M000050"></a>
+
+        <div class="method-heading">
+          <a href="ArgumentManager.src/M000050.html" target="Code" class="method-signature"
+            onclick="popupCode('ArgumentManager.src/M000050.html');return false;">
+          <span class="method-name">add_option</span><span class="method-args">( names = [], specs = {} )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+adds option with given names and specification
+</p>
+<hr size="1"></hr><table>
+<tr><td valign="top"><em>names</em>:</td><td>option name (string) or array of option names
+
+</td></tr>
+<tr><td valign="top"><em>specs</em>:</td><td>hash containing option specifications (see section &quot;<a
+href="Option.html">Option</a> specifications&quot; for details)
+
+</td></tr>
+</table>
+        </div>
+      </div>
+
+      <div id="method-M000051" class="method-detail">
+        <a name="M000051"></a>
+
+        <div class="method-heading">
+          <a href="ArgumentManager.src/M000051.html" target="Code" class="method-signature"
+            onclick="popupCode('ArgumentManager.src/M000051.html');return false;">
+          <span class="method-name">add_options</span><span class="method-args">( *names )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+adds arbitrary number of options using default specification
+</p>
+<hr size="1"></hr><table>
+<tr><td valign="top"><em>names</em>:</td><td>any number of option names (strings) to be added
+
+</td></tr>
+</table>
+        </div>
+      </div>
+
+      <div id="method-M000057" class="method-detail">
+        <a name="M000057"></a>
+
+        <div class="method-heading">
+          <a href="ArgumentManager.src/M000057.html" target="Code" class="method-signature"
+            onclick="popupCode('ArgumentManager.src/M000057.html');return false;">
+          <span class="method-name">expand_short_option_cluster</span><span class="method-args">( short_option_cluster )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a
+href="ArgumentManager.html#M000057">ArgumentManager.expand_short_option_cluster</a>
+</p>
+<hr size="1"></hr><table>
+<tr><td valign="top"><em>option</em>:</td><td>single argument from command line
+
+</td></tr>
+<tr><td valign="top"><b>returns</b>:</td><td>converts a string of short arguments (-abc) to an array of individual ones
+
+</td></tr>
+</table>
+        </div>
+      </div>
+
+      <div id="method-M000056" class="method-detail">
+        <a name="M000056"></a>
+
+        <div class="method-heading">
+          <a href="ArgumentManager.src/M000056.html" target="Code" class="method-signature"
+            onclick="popupCode('ArgumentManager.src/M000056.html');return false;">
+          <span class="method-name">expand_short_option_clusters</span><span class="method-args">( argv )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+exapnds every cluster of multiple short options (-abc) to single short
+options (-a -b -c)
+</p>
+<hr size="1"></hr><table>
+<tr><td valign="top"><em>argv</em>:</td><td>array of command line arguments passed to program
+
+</td></tr>
+</table>
+<hr size="1"></hr><table>
+<tr><td valign="top"><b>returns</b>:</td><td>new argv with expanded multiples of short options (-abc) to single (-a -b
+-c)
+
+</td></tr>
+</table>
+        </div>
+      </div>
+
+      <div id="method-M000060" class="method-detail">
+        <a name="M000060"></a>
+
+        <div class="method-heading">
+          <a href="ArgumentManager.src/M000060.html" target="Code" class="method-signature"
+            onclick="popupCode('ArgumentManager.src/M000060.html');return false;">
+          <span class="method-name">fetch_option_by_name</span><span class="method-args">( option_name )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+fetches option using its name
+</p>
+<hr size="1"></hr><table>
+<tr><td valign="top"><em>name</em>:</td><td>name of option to be fetched
+
+</td></tr>
+<tr><td valign="top"><b>returns</b>:</td><td>option if found, nil otherwise
+
+</td></tr>
+</table>
+        </div>
+      </div>
+
+      <div id="method-M000065" class="method-detail">
+        <a name="M000065"></a>
+
+        <div class="method-heading">
+          <a href="ArgumentManager.src/M000065.html" target="Code" class="method-signature"
+            onclick="popupCode('ArgumentManager.src/M000065.html');return false;">
+          <span class="method-name">get_help</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="ArgumentManager.html#M000065">ArgumentManager.get_help</a>
+</p>
+<hr size="1"></hr><table>
+<tr><td valign="top"><b>returns</b>:</td><td>array containing info (names, mandatory, constraints, default, help) for
+each registered option
+
+</td></tr>
+</table>
+        </div>
+      </div>
+
+      <div id="method-M000053" class="method-detail">
+        <a name="M000053"></a>
+
+        <div class="method-heading">
+          <a href="ArgumentManager.src/M000053.html" target="Code" class="method-signature"
+            onclick="popupCode('ArgumentManager.src/M000053.html');return false;">
+          <span class="method-name">get_non_options</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+gets non-options
+</p>
+<hr size="1"></hr><table>
+<tr><td valign="top"><b>returns</b>:</td><td>array containing all non-options
+
+</td></tr>
+</table>
+        </div>
+      </div>
+
+      <div id="method-M000052" class="method-detail">
+        <a name="M000052"></a>
+
+        <div class="method-heading">
+          <a href="ArgumentManager.src/M000052.html" target="Code" class="method-signature"
+            onclick="popupCode('ArgumentManager.src/M000052.html');return false;">
+          <span class="method-name">get_options</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+gets options
+</p>
+<hr size="1"></hr><table>
+<tr><td valign="top"><b>returns</b>:</td><td>array containing all options
+
+</td></tr>
+</table>
+        </div>
+      </div>
+
+      <div id="method-M000064" class="method-detail">
+        <a name="M000064"></a>
+
+        <div class="method-heading">
+          <a href="ArgumentManager.src/M000064.html" target="Code" class="method-signature"
+            onclick="popupCode('ArgumentManager.src/M000064.html');return false;">
+          <span class="method-name">match_long_option</span><span class="method-args">( option )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+long option
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000062" class="method-detail">
+        <a name="M000062"></a>
+
+        <div class="method-heading">
+          <a href="ArgumentManager.src/M000062.html" target="Code" class="method-signature"
+            onclick="popupCode('ArgumentManager.src/M000062.html');return false;">
+          <span class="method-name">match_option</span><span class="method-args">( option )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+ArgumentManager.match_option_name
+</p>
+<hr size="1"></hr><table>
+<tr><td valign="top"><em>option</em>:</td><td>option to be processed
+
+</td></tr>
+<tr><td valign="top"><b>returns</b>:</td><td>the name of the argument
+
+</td></tr>
+</table>
+        </div>
+      </div>
+
+      <div id="method-M000063" class="method-detail">
+        <a name="M000063"></a>
+
+        <div class="method-heading">
+          <a href="ArgumentManager.src/M000063.html" target="Code" class="method-signature"
+            onclick="popupCode('ArgumentManager.src/M000063.html');return false;">
+          <span class="method-name">match_short_option</span><span class="method-args">( option )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+short option
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000061" class="method-detail">
+        <a name="M000061"></a>
+
+        <div class="method-heading">
+          <a href="ArgumentManager.src/M000061.html" target="Code" class="method-signature"
+            onclick="popupCode('ArgumentManager.src/M000061.html');return false;">
+          <span class="method-name">match_short_option_cluster</span><span class="method-args">( argument )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a
+href="ArgumentManager.html#M000061">ArgumentManager.match_short_option_cluster</a>
+</p>
+<hr size="1"></hr><table>
+<tr><td valign="top"><em>argument</em>:</td><td>command line argument (string)
+
+</td></tr>
+<tr><td valign="top"><b>returns</b>:</td><td>match data object in case of match, nil otherwise
+
+</td></tr>
+</table>
+        </div>
+      </div>
+
+      <div id="method-M000055" class="method-detail">
+        <a name="M000055"></a>
+
+        <div class="method-heading">
+          <a href="ArgumentManager.src/M000055.html" target="Code" class="method-signature"
+            onclick="popupCode('ArgumentManager.src/M000055.html');return false;">
+          <span class="method-name">parse</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+parses the command line arguments and checks whether they correspond to
+given specification
+</p>
+<hr size="1"></hr><table>
+<tr><td valign="top"><b>returns</b>:</td><td>hash containing option names and their values
+
+</td></tr>
+</table>
+        </div>
+      </div>
+
+      <div id="method-M000058" class="method-detail">
+        <a name="M000058"></a>
+
+        <div class="method-heading">
+          <a href="ArgumentManager.src/M000058.html" target="Code" class="method-signature"
+            onclick="popupCode('ArgumentManager.src/M000058.html');return false;">
+          <span class="method-name">parse_option</span><span class="method-args">( argv )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="ArgumentManager.html#M000058">ArgumentManager.parse_option</a>
+</p>
+<hr size="1"></hr><table>
+<tr><td valign="top"><em>argv</em>:</td><td>array of command line arguments passed to program
+
+</td></tr>
+<tr><td valign="top"><b>returns</b>:</td><td>string containing the option name plus associated arguments
+
+</td></tr>
+</table>
+        </div>
+      </div>
+
+      <div id="method-M000059" class="method-detail">
+        <a name="M000059"></a>
+
+        <div class="method-heading">
+          <a href="ArgumentManager.src/M000059.html" target="Code" class="method-signature"
+            onclick="popupCode('ArgumentManager.src/M000059.html');return false;">
+          <span class="method-name">process_option</span><span class="method-args">( match_data )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="ArgumentManager.html#M000059">ArgumentManager.process_option</a>
+</p>
+<hr size="1"></hr><table>
+<tr><td valign="top"><em>option</em>:</td><td>option to be processed
+
+</td></tr>
+</table>
+        </div>
+      </div>
+
+      <div id="method-M000066" class="method-detail">
+        <a name="M000066"></a>
+
+        <div class="method-heading">
+          <a href="ArgumentManager.src/M000066.html" target="Code" class="method-signature"
+            onclick="popupCode('ArgumentManager.src/M000066.html');return false;">
+          <span class="method-name">set_binding</span><span class="method-args">( binding )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="ArgumentManager.html#M000066">ArgumentManager.set_binding</a>
+</p>
+<table>
+<tr><td valign="top"><em>binding</em>:</td><td>binding to be set
+
+</td></tr>
+</table>
+        </div>
+      </div>
+
+      <div id="method-M000054" class="method-detail">
+        <a name="M000054"></a>
+
+        <div class="method-heading">
+          <a href="ArgumentManager.src/M000054.html" target="Code" class="method-signature"
+            onclick="popupCode('ArgumentManager.src/M000054.html');return false;">
+          <span class="method-name">set_defaults</span><span class="method-args">( specs = {} )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+sets default option specifications (these are used when particular
+specifications are not provided)
+</p>
+<hr size="1"></hr><table>
+<tr><td valign="top"><em>specs</em>:</td><td>hash containing option specifications to be set as default
+
+</td></tr>
+</table>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

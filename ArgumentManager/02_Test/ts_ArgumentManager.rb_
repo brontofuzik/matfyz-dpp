@@ -1,0 +1,11 @@
+require 'ArgumentManager'
+require 'test/unit'
+
+require 'tc_add_option'
+require 'tc_add_options'
+require 'tc_set_defaults'
+require 'tc_parse_non_options'
+require 'tc_parse_boolean'
+require 'tc_parse_integer'
+require 'tc_parse_string'
+
